@@ -37,6 +37,9 @@
     //    UIKeyboardFrameBeginUserInfoKey
     //    UIKeyboardAnimationCurveUserInfoKey
     //    UIKeyboardAnimationDurationUserInfoKey
+    CGRect beginFra = [notify.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect endFra = notify.userInfo[UIKeyboardFrameEndUserInfoKey];
+    
 }
 
 @end
