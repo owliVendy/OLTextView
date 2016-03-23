@@ -10,4 +10,6 @@
 
 @interface OLTextView : UITextView
 
+@property (nonatomic,assign) CGFloat maxHeight; //输入框最大高度
+
 @end
