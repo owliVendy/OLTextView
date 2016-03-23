@@ -47,6 +47,7 @@
     [_textInput.bottomAnchor constraintEqualToAnchor:_barContainer.bottomAnchor constant:-5].active = YES;
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBg:)]];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -81,10 +82,14 @@
     } else {
         
     }
+    
+    [self.view removeGestureRecognizer:self.view.gestureRecognizers.firstObject];
     [UIView animateWithDuration:duration delay:0 options:curve animations:^{
         self.btmLayout.constant += offsety;
         [self.view layoutIfNeeded];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBg:)]];
+    }];
 }
 
 @end
