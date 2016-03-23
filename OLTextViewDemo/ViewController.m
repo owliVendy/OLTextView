@@ -10,6 +10,7 @@
 #import "OLTextView.h"
 
 @interface ViewController ()
+<UITextViewDelegate>
 {
     OLTextView *_textInput;
     UIView *_barContainer;
@@ -29,9 +30,7 @@
     
     _textInput = [[OLTextView alloc] init];
     _textInput.layer.cornerRadius = 7;
-    _textInput.layer.borderWidth = 1.f;
-    _textInput.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _textInput.font = [UIFont systemFontOfSize:17];
+    _textInput.font = [UIFont systemFontOfSize:15];
     [_barContainer addSubview:_textInput];
     _textInput.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -43,11 +42,16 @@
     
     [_textInput.leftAnchor constraintEqualToAnchor:_barContainer.leftAnchor constant:10].active = YES;
     [_textInput.rightAnchor constraintEqualToAnchor:_barContainer.rightAnchor constant:-10].active = YES;
-    [_textInput.topAnchor constraintEqualToAnchor:_barContainer.topAnchor constant:5].active = YES;
-    [_textInput.bottomAnchor constraintEqualToAnchor:_barContainer.bottomAnchor constant:-5].active = YES;
+    [_textInput.topAnchor constraintEqualToAnchor:_barContainer.topAnchor constant:6].active = YES;
+    [_textInput.bottomAnchor constraintEqualToAnchor:_barContainer.bottomAnchor constant:-6].active = YES;
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBg:)]];
     
+    NSTextAttachment *emojiAttachment = [[NSTextAttachment alloc] init];
+    emojiAttachment.bounds = CGRectMake(0, -5, 20, 20);
+    emojiAttachment.image = [UIImage imageNamed:@"emoji001"];
+    [_textInput.textStorage appendAttributedString:[NSAttributedString attributedStringWithAttachment:emojiAttachment]];
+    _textInput.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,6 +64,13 @@
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - delegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    textView.typingAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:15]};
+    return YES;
 }
 
 #pragma mark - action
